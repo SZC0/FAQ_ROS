@@ -1,0 +1,101 @@
+
+1.ROS 运行rviz报错
+[21:21:41; angus; ~]rosrun rviz rviz 
+[ INFO] [1561123308.864626314]: rviz version 1.12.16
+[ INFO] [1561123308.864703336]: compiled against Qt version 5.5.1
+[ INFO] [1561123308.864718346]: compiled against OGRE version 1.9.0 (Ghadamon)
+[ INFO] [1561123310.214533400]: Stereo is NOT SUPPORTED
+[ INFO] [1561123310.214870098]: OpenGl version: 3 (GLSL 1.3).
+Segmentation fault (core dumped)
+
+解决：
+（1）sudo add-apt-repository ppa:ubuntu-x-swat/updates
+[21:11:53; angus; ~]sudo add-apt-repository ppa:ubuntu-x-swat/updates
+[sudo] password for angus: 
+ Updated versions of X.org drivers, libraries, etc. for Ubuntu.
+
+This PPA is for stable upstream releases of X.org components. If you're looking for something even more bleeding-edge, please see the xorg-edgers PPA.
+
+While Ubuntu does not "officially/formally" support these packages, if you discover problems when installing these debs please feel free to report bugs to launchpad. However, please make sure to clearly state that you are running packages from this PPA so we know the fixes need to come here.
+
+If you are upgrading from one release to another with this PPA activated, please install the ppa-purge package and use it to downgrade everything in here beforehand. sudo ppa-purge ppa:ubuntu-x-swat/updates will do it.
+
+[Directions for packaging drivers can be seen at https://wiki.ubuntu.com/X/DriverBuilding]
+ More info: https://launchpad.net/~ubuntu-x-swat/+archive/ubuntu/updates
+Press [ENTER] to continue or ctrl-c to cancel adding it
+
+gpg: keyring `/tmp/tmp8ys1v_5j/secring.gpg' created
+gpg: keyring `/tmp/tmp8ys1v_5j/pubring.gpg' created
+gpg: requesting key AF1CDFA9 from hkp server keyserver.ubuntu.com
+gpg: /tmp/tmp8ys1v_5j/trustdb.gpg: trustdb created
+gpg: key AF1CDFA9: public key "Launchpad PPA for Ubuntu-X" imported
+gpg: no ultimately trusted keys found
+gpg: Total number processed: 1
+gpg:               imported: 1  (RSA: 1)
+OK
+
+（2）[21:12:14; angus; ~]sudo apt update 
+Ign:1 http://dl.google.com/linux/chrome/deb stable InRelease
+Hit:2 http://dl.google.com/linux/chrome/deb stable Release                                                 
+Hit:4 http://mirrors.tuna.tsinghua.edu.cn/ubuntu xenial InRelease                                                                   
+Hit:5 http://mirrors.tuna.tsinghua.edu.cn/ubuntu xenial-updates InRelease                                 
+Hit:6 http://mirrors.tuna.tsinghua.edu.cn/ubuntu xenial-backports InRelease                               
+Hit:7 http://mirrors.tuna.tsinghua.edu.cn/ubuntu xenial-security InRelease                                
+Hit:8 http://ppa.launchpad.net/jonathonf/vim/ubuntu xenial InRelease                
+Get:9 http://packages.ros.org/ros/ubuntu xenial InRelease [4,678 B]                                 
+Hit:10 http://ppa.launchpad.net/ubuntu-x-swat/updates/ubuntu xenial InRelease                                                                                                          
+Err:9 http://packages.ros.org/ros/ubuntu xenial InRelease                                                                                                                              
+  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY F42ED6FBAB17C654
+Fetched 4,678 B in 7s (584 B/s)                                                                                                                                                        
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+498 packages can be upgraded. Run 'apt list --upgradable' to see them.
+W: An error occurred during the signature verification. The repository is not updated and the previous index files will be used. GPG error: http://packages.ros.org/ros/ubuntu xenial InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY F42ED6FBAB17C654
+W: Failed to fetch http://packages.ros.org/ros/ubuntu/dists/xenial/InRelease  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY F42ED6FBAB17C654
+W: Some index files failed to download. They have been ignored, or old ones used instead.
+
+（3）[21:14:27; angus; ~] sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F42ED6FBAB17C654
+Executing: /tmp/tmp.bI2vCNMYNq/gpg.1.sh --keyserver
+keyserver.ubuntu.com
+--recv-keys
+F42ED6FBAB17C654
+gpg: requesting key AB17C654 from hkp server keyserver.ubuntu.com
+gpg: key AB17C654: public key "Open Robotics <info@osrfoundation.org>" imported
+gpg: Total number processed: 1
+gpg:               imported: 1  (RSA: 1)
+[21:16:06; angus; ~]sudo apt update 
+Ign:1 http://dl.google.com/linux/chrome/deb stable InRelease
+Hit:2 http://mirrors.tuna.tsinghua.edu.cn/ubuntu xenial InRelease                                                                                                
+Hit:3 http://dl.google.com/linux/chrome/deb stable Release                                                                                                       
+Hit:4 http://mirrors.tuna.tsinghua.edu.cn/ubuntu xenial-updates InRelease                                                                        
+Hit:5 http://mirrors.tuna.tsinghua.edu.cn/ubuntu xenial-backports InRelease                   
+Hit:6 http://mirrors.tuna.tsinghua.edu.cn/ubuntu xenial-security InRelease                    
+Hit:7 http://ppa.launchpad.net/jonathonf/vim/ubuntu xenial InRelease                         
+Get:9 http://packages.ros.org/ros/ubuntu xenial InRelease [4,678 B]                                
+Hit:10 http://ppa.launchpad.net/ubuntu-x-swat/updates/ubuntu xenial InRelease
+Get:11 http://packages.ros.org/ros/ubuntu xenial/main amd64 Packages [787 kB]                                                                                                          
+Get:12 http://packages.ros.org/ros/ubuntu xenial/main i386 Packages [564 kB]                                                                                                           
+Fetched 1,356 kB in 13s (98.4 kB/s)                                                                                                                                                    
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+500 packages can be upgraded. Run 'apt list --upgradable' to see them.
+[21:16:27; angus; ~]apt list --upgradable 
+Listing... Done
+
+(4)[21:33:37; angus; ~]sudo apt-get update 
+[sudo] password for angus: 
+Ign:1 http://dl.google.com/linux/chrome/deb stable InRelease
+Hit:2 http://dl.google.com/linux/chrome/deb stable Release                                          
+Hit:4 http://ppa.launchpad.net/jonathonf/vim/ubuntu xenial InRelease                                                         
+Hit:5 http://packages.ros.org/ros/ubuntu xenial InRelease                                           
+Hit:6 http://mirrors.tuna.tsinghua.edu.cn/ubuntu xenial InRelease                                   
+Hit:7 http://mirrors.tuna.tsinghua.edu.cn/ubuntu xenial-updates InRelease
+Hit:8 http://mirrors.tuna.tsinghua.edu.cn/ubuntu xenial-backports InRelease
+Hit:9 http://mirrors.tuna.tsinghua.edu.cn/ubuntu xenial-security InRelease
+Hit:10 http://ppa.launchpad.net/ubuntu-x-swat/updates/ubuntu xenial InRelease
+Reading package lists... Done 
+
+(5)sudo apt-get dist-upgrade
+(6)glxinfo | grep "OpenGL version"
